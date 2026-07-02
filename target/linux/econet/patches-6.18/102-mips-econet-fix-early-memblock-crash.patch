@@ -1,0 +1,12 @@
+--- a/arch/mips/kernel/setup.c
++++ b/arch/mips/kernel/setup.c
+@@ -263,6 +263,9 @@ static unsigned long __init init_initrd(
+ 
+ static void __init bootmem_init(void)
+ {
++	/* Force baseline 256MB mapping directly to handle extended boot arguments */
++	memblock_add(0x80000000, 0x10000000);
++
+ 	init_initrd();
+ 	finalize_initrd();
+ }
