@@ -19,6 +19,11 @@
 	/* Define the common tclinux partitioning skeleton if not already present upstream */
 	soc {
 		/* Shared system bus and peripheral layouts belong here */
+    compatible = "simple-bus";
+    #address-cells = <1>;
+    #size-cells = <1>;
+    ranges = <0x0 0x0 0x0 0xffffffff>; /* Map the 64-bit parent range cleanly down to 32-bit child registers */
+
     switch@1fb50000 {
       compatible = "mediatek,mt7530-mmio";
       reg = <0x1fb50000 0x10000>;
