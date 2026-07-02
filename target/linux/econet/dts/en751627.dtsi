@@ -7,18 +7,47 @@
 
 / {
 	compatible = "econet,en751627";
-	#address-cells = <1>;
-	#size-cells = <1>;
+	#address-cells = <2>;
+	#size-cells = <2>;
 
-	memory@80000000 {
-    	device_type = "memory";
-		reg = <0x80000000 0x10000000>; /* Full 256MB window, validating up to 0x90000000 */
+  /* Explicitly expand the memory parameters into a 64-bit register bank matrix */
+  memory@80000000 {
+    device_type = "memory";
+    reg = <0x0 0x80000000 0x0 0x10000000>; /* High 32-bit cells set to 0x0 */
 	};
 
 	/* Define the common tclinux partitioning skeleton if not already present upstream */
 	soc {
 		/* Shared system bus and peripheral layouts belong here */
-	};
+    switch@1fb50000 {
+      compatible = "mediatek,mt7530-mmio";
+      reg = <0x1fb50000 0x10000>;
+      status = "okay";
+
+      switch_ports: ports {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        port@1 { reg = <1>; status = "disabled"; };
+        port@2 { reg = <2>; status = "disabled"; };
+        port@3 { reg = <3>; status = "disabled"; };
+        port@4 { reg = <4>; status = "disabled"; };
+        port@5 { reg = <5>; status = "disabled"; };
+
+        port@6 {
+          reg = <6>;
+          label = "cpu";
+          ethernet = <&ethernet>;
+          phy-mode = "trgmii";
+
+          fixed-link {
+            speed = <1000>;
+            full-duplex;
+          };
+        };
+      };
+    };
+  };
 
 	hpt_clock: clock {
 		compatible = "fixed-clock";
@@ -254,13 +283,13 @@
 		usb3-lpm-capable;
 	};
 
-	ethernet: ethernet@1fb50000 {
-    	compatible = "econet,en751221-eth";
-    	reg = <0x1fb50000 0x10000>;
-    	interrupt-parent = <&gic>;
-    	interrupts = <GIC_SHARED 39 IRQ_TYPE_LEVEL_HIGH>;
+  ethernet: ethernet@1fb50000 {
+    compatible = "econet,en751221-eth";
+    reg = <0x1fb50000 0x10000>;
+    interrupt-parent = <&gic>;
+    interrupts = <GIC_SHARED 39 IRQ_TYPE_LEVEL_HIGH>;
                 
-    	#address-cells = <1>;
-    	#size-cells = <0>;
-	};
+    #address-cells = <1>;
+    #size-cells = <0>;
+  };
 };

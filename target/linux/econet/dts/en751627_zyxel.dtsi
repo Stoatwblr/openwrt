@@ -19,7 +19,7 @@
 		status = "disabled";
 	};
 
-chosen {
+  chosen {
 		bootargs = "earlycon=uart8250,mmio32,0x1fbf0000 console=ttyS0,115200 ";
 	};
 
@@ -115,44 +115,36 @@ chosen {
 	};
 };
 
-
-/* 
- * ============================================================================
- * NETWORK CONTROLLER SCOPE & NESTED INTEGRATED SWITCH ARRAYS
- * ============================================================================
- * Hooked directly into the active, system-defined mainline &eth master label.
- */
+/* Reference the internal ethernet engine handle label natively */
 &ethernet {
 	status = "okay";
+};
 
-	mdio-bus {
-		#address-cells = <1>;
-		#size-cells = <0>;
-		switch@1f {
-			compatible = "mediatek,mt7530";
-			reg = <0x1f>;
-			status = "okay";
 
-			ports {
-				#address-cells = <1>;
-				#size-cells = <0>;
+/* Override only the physical wiring properties for the Zyxel board ports */
+&switch_ports {
+	port@0 {
+		status = "okay";
+		label = "lan1";
+	};
 
-				port@0 { reg = <0>; label = "lan1"; };
-				port@1 { reg = <1>; label = "lan2"; };
-				port@2 { reg = <2>; label = "lan3"; };
-				port@3 { reg = <3>; label = "lan4"; };
-				port@4 { reg = <4>; label = "wan"; };
+	port@1 {
+		status = "okay";
+		label = "lan2";
+	};
 
-				port@6 {
-					reg = <6>;
-					label = "cpu";
-					ethernet = <&ethernet>; /* FIXED: Points directly to the redefined mainline label */
-					fixed-link {
-						speed = <1000>;
-						full-duplex;
-					};
-				};
-			};
-		};
+	port@2 {
+		status = "okay";
+		label = "lan3";
+	};
+
+	port@3 {
+		status = "okay";
+		label = "lan4";
+	};
+
+	port@4 {
+		status = "okay";
+		label = "wan";
 	};
 };
