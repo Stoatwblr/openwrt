@@ -4,21 +4,21 @@
  * Copyright (C) 2026 OpenWrt.org
  *
  * ============================================================================
- * LEAF NODE PROFILE: ZYXEL EX3301-T0 PREMIUM MESH ROUTER
+ * LEAF NODE PROFILE: ZYXEL DX3301-T0 HIGH-TIER INTEGRATED GATEWAY
  * ============================================================================
  * Subseries Inheritance: 3301 Wi-Fi 6 Platform Blueprint (Native USB 3.0 Active)
  * RAM Configuration: 512MB High-Capacity Allocation
  * Fleet Relationship Matrix:
- *  - vs EX3300: EX3301 exposes full USB 3.0 SuperSpeed physical bandwidth limits.
- *  - vs DX3301: EX3301 utilizes standard copper RJ45 WAN mapping instead of VDSL2.
+ *  - vs DX3300: DX3301 introduces uncompromised SuperSpeed storage options.
+ *  - vs EX3301: DX3301 fires upstream connections over integrated VDSL2 vectoring.
  */
 
 /dts-v1/;
 #include "en751627_zyxel_3301_subseries.dtsi"
 
 / {
-	model = "Zyxel EX3301-T0";
-	compatible = "zyxel,ex3301-t0", "econet,en751627";
+	model = "Zyxel DX3301-T0";
+	compatible = "zyxel,dx3301-t0", "econet,en751627";
 
 	leds {
 		led_phone_green: phone_green {
@@ -33,5 +33,5 @@
 };
 
 &dsl_modem {
-	status = "disabled"; /* Pure Ethernet WAN chassis configuration */
+	status = "okay"; /* Enable integrated VDSL layer routing loops */
 };

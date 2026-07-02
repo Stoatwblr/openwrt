@@ -1,0 +1,46 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2026 Alan <alan@Riffraff>
+ * Copyright (C) 2026 OpenWrt.org
+ *
+ * ============================================================================
+ * LEAF NODE PROFILE: ZYXEL EMG5723-T50K INTEGRATED ACCESS DEVICE
+ * ============================================================================
+ * Series Inheritance: T50 Wi-Fi 5 Core Series (Modified for Single USB 3.0 Only)
+ * RAM Configuration: 512MB High-Capacity Allocation
+ * Fleet Relationship Matrix:
+ *  - vs VMG8825: EMG5723 features pure Ethernet WAN; physically drops secondary USB 2.0.
+ *  - vs EMG5523: EMG5723 upgrades Wi-Fi to AC2400 4x4, doubles RAM, switches USB 2.0 to USB 3.0.
+ */
+
+/dts-v1/;
+#include "en751627_zyxel_T50_series.dtsi"
+
+/ {
+	model = "Zyxel EMG5723-T50K";
+	compatible = "zyxel,emg5723-t50k", "econet,en751627";
+
+	leds {
+		led_phone_green: phone_green {
+			label = "green:phone";
+			gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
+		};
+	};
+};
+
+&usb {
+	/* Target configuration matching the standard MTK XHCI controller layout */
+	/* Physically exposes single USB 3.0 port layout; prunes USB 2.0 path */
+	usb2-ports {
+		/delete-node/ port@1;
+	};
+};
+
+
+&voip_slic {
+	status = "okay"; /* Activate the open-ended VoIP SLIC driver hook */
+};
+
+&dsl_modem {
+	status = "disabled"; /* Pure Ethernet WAN chassis configuration */
+};

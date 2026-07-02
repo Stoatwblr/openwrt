@@ -1,0 +1,38 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2026 Alan <alan@Riffraff>
+ * Copyright (C) 2026 OpenWrt.org
+ *
+ * ============================================================================
+ * LEAF NODE PROFILE: ZYXEL EMG5523-T50B INTEGRATED ACCESS DEVICE
+ * ============================================================================
+ * Subseries Inheritance: T50B Wi-Fi 5 Platform Blueprint (Single USB 2.0)
+ * RAM Configuration: 256MB Hardware Allocation
+ * Fleet Relationship Matrix:
+ *  - vs EMG3525: EMG5523 doubles internal RAM space and incorporates Voice FXS SLICs.
+ *  - vs VMG8623: EMG5523 utilizes a dedicated Ethernet WAN port instead of a copper VDSL2 modem.
+ *  - vs VMG8825: EMG5523 lacks dual USB ports and lacks AC2400 4x4 radio chains.
+ */
+
+/dts-v1/;
+#include "en751627_zyxel_T50B_subseries.dtsi"
+
+/ {
+	model = "Zyxel EMG5523-T50B";
+	compatible = "zyxel,emg5523-t50b", "econet,en751627";
+
+	leds {
+		led_phone_green: phone_green {
+			label = "green:phone";
+			gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
+		};
+	};
+};
+
+&voip_slic {
+	status = "okay"; /* Activate the open-ended VoIP SLIC driver hook */
+};
+
+&dsl_modem {
+	status = "disabled"; /* Pure Ethernet WAN chassis configuration */
+};

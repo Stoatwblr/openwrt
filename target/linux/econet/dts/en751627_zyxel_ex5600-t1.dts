@@ -1,0 +1,49 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2026 Alan <alan@Riffraff>
+ * Copyright (C) 2026 OpenWrt.org
+ *
+ * ============================================================================
+ * LEAF NODE PROFILE: ZYXEL EX5600-T1 COST-OPTIMISED AX6000 ROUTER
+ * ============================================================================
+ * Subseries Inheritance: 3300 Value Blueprint (Restricted to Single USB 2.0 Line)
+ * Physical Port Loadout: 3x GbE LAN + 1x 2.5G LAN + 1x 2.5G WAN Only (No SFP Cage)
+ * Front Panel Indicator Mask: Phone and SFP LEDs Both Blanked Off Completely
+ */
+
+/dts-v1/;
+#include "en751627_zyxel_3300_subseries.dtsi"
+
+/ {
+	model = "Zyxel EX5600-T1";
+	compatible = "zyxel,ex5600-t1", "econet,en751627";
+	/* Both Phone and SFP nodes are entirely omitted from this data-only chassis */
+};
+
+&voip_slic {
+	status = "disabled"; /* Unpopulated physical telephone ports */
+};
+
+&dsl_modem {
+	status = "disabled"; /* Multi-gigabit pure copper RJ45 WAN chassis */
+};
+
+&ethernet {
+	mdio-bus {
+		switch@1f {
+			ports {
+				/* 
+				 * Ports 0, 1, and 2 map directly to the 3 physical 1GbE LAN sockets.
+				 * Ports 3 and 4 are unpopulated on the 560x motherboard layer.
+				 */
+				port@3 {
+					status = "disabled";
+				};
+				port@4 {
+					status = "disabled";
+				};
+			};
+		};
+	};
+};
+

@@ -1,0 +1,56 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2026 Alan <alan@Riffraff>
+ * Copyright (C) 2026 OpenWrt.org
+ *
+ * ============================================================================
+ * LEAF NODE PROFILE: ZYXEL EX5601-T1 AX6000 GATEWAY
+ * ============================================================================
+ * Subseries Inheritance: 3301 Premium Blueprint (Native USB 3.0 Active)
+ * Physical Port Loadout: 3x GbE LAN + 1x 2.5G LAN + 1x 2.5G WAN Only (No SFP Cage)
+ * Front Panel Indicator Mask: SFP LED Blanked Off the Panel Layout
+ */
+
+/dts-v1/;
+#include "en751627_zyxel_3301_subseries.dtsi"
+
+/ {
+	model = "Zyxel EX5601-T1";
+	compatible = "zyxel,ex5601-t1", "econet,en751627";
+
+	leds {
+		led_phone_green: phone_green {
+			label = "green:phone";
+			gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
+		};
+		/* SFP node remains completely omitted to blank it off user-space */
+	};
+};
+
+&voip_slic {
+	status = "okay"; /* Enable voice SLIC hooks */
+};
+
+&dsl_modem {
+	status = "disabled"; /* Copper broadband controller disabled */
+};
+
+&ethernet {
+	mdio-bus {
+		switch@1f {
+			ports {
+				/* 
+				 * Ports 0, 1, and 2 map directly to the 3 physical 1GbE LAN sockets.
+				 * Ports 3 and 4 are unpopulated on the 560x motherboard layer.
+				 */
+				port@3 {
+					status = "disabled";
+				};
+				port@4 {
+					status = "disabled";
+				};
+			};
+		};
+	};
+};
+

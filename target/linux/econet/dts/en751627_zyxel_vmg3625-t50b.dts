@@ -1,0 +1,29 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2026 Alan <alan@Riffraff>
+ * Copyright (C) 2026 OpenWrt.org
+ *
+ * ============================================================================
+ * LEAF NODE PROFILE: ZYXEL VMG3625-T50B WIRELESS GATEWAY
+ * ============================================================================
+ * Subseries Inheritance: T50B Wi-Fi 5 Platform Blueprint (Single USB 2.0)
+ * RAM Configuration: 256MB Hardware Allocation
+ * Fleet Relationship Matrix:
+ *  - vs VMG8623: VMG3625 drops the voice components (Data Only, No Phone LED).
+ *  - vs EMG3525: VMG3625 incorporates the internal VDSL2 copper line broadband loop.
+ */
+
+#include "en751627_zyxel_T50B_subseries.dtsi"
+
+/ {
+	model = "Zyxel VMG3625-T50B";
+	compatible = "zyxel,vmg3625-t50b", "econet,en751627";
+};
+
+&voip_slic {
+	status = "disabled"; /* Unpopulated hardware voice block */
+};
+
+&dsl_modem {
+	status = "okay"; /* Enable the open-ended VDSL copper modem engine loop */
+};

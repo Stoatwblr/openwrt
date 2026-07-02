@@ -1,0 +1,38 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2026 Alan <alan@Riffraff>
+ * Copyright (C) 2026 OpenWrt.org
+ *
+ * ============================================================================
+ * LEAF NODE PROFILE: ZYXEL VMG8623-T50B INTEGRATED ACCESS DEVICE
+ * ============================================================================
+ * Subseries Inheritance: T50B Wi-Fi 5 Platform Blueprint (Single USB 2.0)
+ * RAM Configuration: 256MB Hardware Allocation
+ * Fleet Relationship Matrix:
+ *  - vs VMG3625: VMG8623 incorporates twin Voice FXS SLICs and matching Phone LED indicator.
+ *  - vs EMG5523: VMG8623 activates the on-board VDSL2 copper line modem broadband loop.
+ *  - vs VMG3927: VMG8623 drops dual-USB options down to single USB 2.0 and scales back Wi-Fi chains.
+ */
+
+/dts-v1/;
+#include "en751627_zyxel_T50B_subseries.dtsi"
+
+/ {
+	model = "Zyxel VMG8623-T50B";
+	compatible = "zyxel,vmg8623-t50b", "econet,en751627";
+
+	leds {
+		led_phone_green: phone_green {
+			label = "green:phone";
+			gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
+		};
+	};
+};
+
+&voip_slic {
+	status = "okay"; /* Activate the open-ended VoIP SLIC driver hook */
+};
+
+&dsl_modem {
+	status = "okay"; /* Activate the open-ended VDSL copper modem engine loop */
+};

@@ -1,0 +1,47 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2026 Alan <alan@Riffraff>
+ * Copyright (C) 2026 OpenWrt.org
+ *
+ * ============================================================================
+ * LEAF NODE PROFILE: ZYXEL WX5600-T0 HIGH-BACKHAUL WIRELESS EXTENDER
+ * ============================================================================
+ * Series Inheritance: T0 Core Wi-Fi 6 Generation (Saves 256MB RAM / No USB)
+ * Physical Port Loadout: 3x GbE Ports + Dual 2.5GbE Multi-Gig LAN Interfaces
+ * Front Panel Indicator Mask: WAN, Internet, Phone, and SFP All Blanked Off Panel
+ */
+
+/dts-v1/;
+#include "en751627_zyxel_T0_series.dtsi"
+
+/ {
+	model = "Zyxel WX5600-T0 Extender";
+	compatible = "zyxel,wx5600-t0", "econet,en751627";
+};
+
+&usb {
+	status = "disabled"; /* No external storage nodes unpopulated on chassis casing */
+};
+
+&voip_slic {
+	status = "disabled"; /* Unpopulated hardware block */
+};
+
+&dsl_modem {
+	status = "disabled"; /* Unpopulated hardware block */
+};
+
+&ethernet {
+	mdio-bus {
+		switch@1f {
+			ports {
+				/* Drop non-wired GbE ports */
+				port@0 { status = "disabled";	};
+				port@1 { status = "disabled";	};
+				port@2 { status = "disabled";	};
+				port@3 { status = "disabled";	};
+				port@4 { status = "disabled";	};
+			};
+		};
+	};
+};

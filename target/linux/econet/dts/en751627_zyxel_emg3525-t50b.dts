@@ -1,0 +1,31 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2026 Alan <alan@Riffraff>
+ * Copyright (C) 2026 OpenWrt.org
+ *
+ * ============================================================================
+ * LEAF NODE PROFILE: ZYXEL EMG3525-T50B WIRELESS GATEWAY
+ * ============================================================================
+ * Subseries Inheritance: T50B Wi-Fi 5 Platform Blueprint (Single USB 2.0)
+ * RAM Configuration: 128MB Hardware Allocation
+ * Fleet Relationship Matrix:
+ *  - vs EMG5523: EMG3525 drops FXS Voice SLICs and scales RAM back to 128MB (Data Only).
+ *  - vs VMG3625: EMG3525 utilizes a pure Gigabit Ethernet RJ45 WAN instead of VDSL2.
+ */
+
+/dts-v1/;
+#include "en751627_zyxel_T50B_subseries.dtsi"
+
+/ {
+	model = "Zyxel EMG3525-T50B";
+	compatible = "zyxel,emg3525-t50b", "econet,en751627";
+	/* Panel phone LED block is completely absent on this data-only layout */
+};
+
+&voip_slic {
+	status = "disabled"; /* Unpopulated hardware block */
+};
+
+&dsl_modem {
+	status = "disabled"; /* Pure Ethernet WAN chassis configuration */
+};

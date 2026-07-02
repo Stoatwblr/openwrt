@@ -1,0 +1,60 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2026 Alan <alan@Riffraff>
+ * Copyright (C) 2026 OpenWrt.org
+ *
+ * ============================================================================
+ * LEAF NODE PROFILE: ZYXEL EX5600-T0 / EX5601-T0 AX6000 FLAGSHIP GATEWAY
+ * ============================================================================
+ * Subseries Inheritance: 3301 Premium Blueprint (Native USB 3.0 Active)
+ * Physical Port Loadout: 3x GbE LAN + 1x 2.5G LAN + 1x 2.5G WAN + Optical SFP Cage
+ * Front Panel Indicator Mask: Full Array Active (All LEDs Populated)
+ */
+
+/dts-v1/;
+#include "en751627_zyxel_3301_subseries.dtsi"
+
+/ {
+	model = "Zyxel EX5601-T0 / EX5600-T0 Flagship";
+	compatible = "zyxel,ex5601-t0", "zyxel,ex5600-t0", "econet,en751627";
+
+	leds {
+		/* Append premium indicators directly onto the core front-panel array sequence */
+		led_phone_green: phone_green {
+			label = "green:phone";
+			gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
+		};
+
+		led_sfp_green: sfp_green {
+			label = "green:sfp";
+			gpios = <&gpio0 22 GPIO_ACTIVE_HIGH>;
+		};
+	};
+};
+
+&voip_slic {
+	status = "okay"; /* Enable active twin-port voice processing */
+};
+
+&dsl_modem {
+	status = "disabled"; /* Multi-gigabit pure fibre/ethernet WAN chassis */
+};
+
+&ethernet {
+	mdio-bus {
+		switch@1f {
+			ports {
+				/* 
+				 * Ports 0, 1, and 2 map directly to the 3 physical 1GbE LAN sockets.
+				 * Ports 3 and 4 are unpopulated on the 560x motherboard layer.
+				 */
+				port@3 {
+					status = "disabled";
+				};
+				port@4 {
+					status = "disabled";
+				};
+			};
+		};
+	};
+};

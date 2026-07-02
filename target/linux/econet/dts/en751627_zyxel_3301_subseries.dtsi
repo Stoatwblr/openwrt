@@ -1,0 +1,20 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2026 Alan <alan@Riffraff>
+ * Copyright (C) 2026 OpenWrt.org
+ *
+ * ============================================================================
+ * SUBSERIES SPECIFICATION: 3301 CHASSIS INTERFACES
+ * ============================================================================
+ * Parent Fleet: en751627_zyxel_T0_series.dtsi
+ * Targets: EX3301-T0, DX3301-T0, EX5600-T0, EX5601-Tx
+ * Constraints: Leaves both USB 2.0 and USB 3.0 transceiver pipelines wide open.
+ */
+
+#include "en751627_zyxel_T0_series.dtsi"
+
+
+&usb {
+	/* USB 3.0 super-speed controller paths remain fully uninhibited */
+	/* Target configuration matching the standard MTK XHCI controller layout */
+};

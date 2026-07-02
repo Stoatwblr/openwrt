@@ -4,21 +4,22 @@
  * Copyright (C) 2026 OpenWrt.org
  *
  * ============================================================================
- * LEAF NODE PROFILE: ZYXEL EX3301-T0 PREMIUM MESH ROUTER
+ * LEAF NODE PROFILE: ZYXEL EX3300-T0 GIGABIT MESH GATEWAY
  * ============================================================================
- * Subseries Inheritance: 3301 Wi-Fi 6 Platform Blueprint (Native USB 3.0 Active)
+ * Subseries Inheritance: 3300 Wi-Fi 6 Platform Blueprint (Single USB 2.0 Only)
  * RAM Configuration: 512MB High-Capacity Allocation
  * Fleet Relationship Matrix:
- *  - vs EX3300: EX3301 exposes full USB 3.0 SuperSpeed physical bandwidth limits.
- *  - vs DX3301: EX3301 utilizes standard copper RJ45 WAN mapping instead of VDSL2.
+ *  - vs EX3301: EX3300 drops native USB 3.0 transceiver lines down to USB 2.0.
+ *  - vs DX3300: EX3300 utilizes a pure Gigabit Ethernet RJ45 WAN instead of VDSL2.
+ *  - vs WX3100: EX3300 adds dual FXS SLIC layers, a dedicated WAN port, and 512MB RAM.
  */
 
 /dts-v1/;
-#include "en751627_zyxel_3301_subseries.dtsi"
+#include "en751627_zyxel_3300_subseries.dtsi"
 
 / {
-	model = "Zyxel EX3301-T0";
-	compatible = "zyxel,ex3301-t0", "econet,en751627";
+	model = "Zyxel EX3300-T0";
+	compatible = "zyxel,ex3300-t0", "econet,en751627";
 
 	leds {
 		led_phone_green: phone_green {

@@ -1,0 +1,48 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2026 Alan <alan@Riffraff>
+ * Copyright (C) 2026 OpenWrt.org
+ *
+ * ============================================================================
+ * LEAF NODE PROFILE: ZYXEL WX3100-T0 MESH EXTENDER
+ * ============================================================================
+ * Series Inheritance: T0 Core Wi-Fi 6 Generation (Saves 256MB RAM / Extender Mod)
+ * Fleet Relationship Matrix:
+ *  - vs 330x Fleet: WX3100 prunes all telephony layers, external USB ports, 
+ *                    and sets local switch hardware to run purely as LAN bridge ports.
+ */
+
+/dts-v1/;
+#include "en751627_zyxel_T0_series.dtsi"
+
+/ {
+	model = "Zyxel WX3100-T0";
+	compatible = "zyxel,wx3100-t0", "econet,en751627";
+
+	/* Completely scrub external physical transceiver interface logic */
+	/delete-node/ gpio-keys;
+};
+
+&usb {
+	status = "disabled"; /* No external USB nodes physically routed on chassis board */
+};
+
+&voip_slic {
+	status = "disabled"; /* Unpopulated hardware voice blocks */
+};
+
+&dsl_modem {
+	status = "disabled"; /* Unpopulated hardware broadband blocks */
+};
+
+&ethernet {
+	mdio-bus {
+		switch@1f {
+			ports {
+				port@2 { status = "disabled"; };
+				port@3 { status = "disabled"; };
+				port@4 { status = "disabled"; };
+			};
+		};
+	};
+};

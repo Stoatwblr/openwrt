@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2026 Alan <alan@Riffraff>
+ * Copyright (C) 2026 OpenWrt.org
+ *
+ * ============================================================================
+ * LEAF NODE PROFILE: ZYXEL VMG3927-T50K PREMIUM VDSL GATEWAY
+ * ============================================================================
+ * Series Inheritance: T50 Wi-Fi 5 Core Series (Preserves 1x USB 3.0 + 1x USB 2.0)
+ * RAM Configuration: 512MB High-Capacity Allocation
+ * Fleet Relationship Matrix:
+ *  - vs VMG8825: VMG3927 drops FXS Telephony components (Data Only, No Phone LED).
+ *  - vs VMG8623: VMG3927 upgrades Wi-Fi to AC2400 4x4, doubles RAM, adds USB 3.0 transceiver.
+ */
+
+/dts-v1/;
+#include "en751627_zyxel_T50_series.dtsi"
+
+/ {
+	model = "Zyxel VMG3927-T50K";
+	compatible = "zyxel,vmg3927-t50k", "econet,en751627";
+};
+
+&voip_slic {
+	status = "disabled"; /* Unpopulated hardware block */
+};
+
+&dsl_modem {
+	status = "okay"; /* Activate the open-ended VDSL copper modem engine loop */
+};

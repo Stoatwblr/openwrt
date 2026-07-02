@@ -1,0 +1,29 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2026 Alan <alan@Riffraff>
+ * Copyright (C) 2026 OpenWrt.org
+ *
+ * ============================================================================
+ * INTERMEDIATE SERIES SUMMARY: ZYXEL EN751627 WI-FI 6 (T0) GENERATION
+ * ============================================================================
+ * Core Baseline: Inherits en751627_zyxel.dtsi
+ * Wireless Driver Target: MediaTek mt79 Modern Multi-User MIMO Frameworks
+ * Sub-Fleet Scope: Governs 330x Mainstream, 3100 Extender, and 560x Premium tiers
+ */
+
+#include "en751627_zyxel.dtsi"
+
+
+
+&usb {
+	status = "okay";
+};
+
+&pcie0 {
+	status = "okay";
+};
+
+&pcie1 {
+	status = "okay";
+};
+

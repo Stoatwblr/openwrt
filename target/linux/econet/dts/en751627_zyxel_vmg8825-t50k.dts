@@ -1,0 +1,37 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2026 Alan <alan@Riffraff>
+ * Copyright (C) 2026 OpenWrt.org
+ *
+ * ============================================================================
+ * LEAF NODE PROFILE: ZYXEL VMG8825-T50K INTEGRATED ACCESS DEVICE
+ * ============================================================================
+ * Series Inheritance: T50 Wi-Fi 5 Core Series (Preserves 1x USB 3.0 + 1x USB 2.0)
+ * RAM Configuration: 512MB High-Capacity Allocation
+ * Fleet Relationship Matrix:
+ *  - vs VMG3927: VMG8825 incorporates twin Voice FXS SLICs and matching Phone LED indicator.
+ *  - vs EMG5723: VMG8825 restores secondary physical USB 2.0 port and activates VDSL2 modem.
+ */
+
+/dts-v1/;
+#include "en751627_zyxel_T50_series.dtsi"
+
+/ {
+	model = "Zyxel VMG8825-T50K / EMG5723-T50K-Dual";
+	compatible = "zyxel,vmg8825-t50k", "econet,en751627";
+
+	leds {
+		led_phone_green: phone_green {
+			label = "green:phone";
+			gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
+		};
+	};
+};
+
+&voip_slic {
+	status = "okay"; /* Activate the open-ended VoIP SLIC driver hook */
+};
+
+&dsl_modem {
+	status = "okay"; /* Activate the open-ended VDSL copper modem engine loop */
+};

@@ -1,0 +1,19 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2026 Alan <alan@Riffraff>
+ * Copyright (C) 2026 OpenWrt.org
+ *
+ * ============================================================================
+ * INTERMEDIATE SERIES SUMMARY: ZYXEL EN751627 WI-FI 5 (T50) GENERATION
+ * ============================================================================
+ * Core Baseline: Inherits en751627_zyxel.dtsi
+ * Wireless Driver Target: MediaTek mt76 High-Speed Legacy Frameworks
+ * Sub-Fleet Scope: Governs all T50B and T50K physical motherboard variants
+ */
+
+#include "en751627_zyxel.dtsi"
+
+&usb {
+	/* Main controller enabled; specific transceiver ports tailored in subseries */
+	status = "okay";
+};

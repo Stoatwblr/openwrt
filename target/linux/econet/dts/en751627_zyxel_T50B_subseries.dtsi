@@ -1,0 +1,23 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2026 Alan <alan@Riffraff>
+ * Copyright (C) 2026 OpenWrt.org
+ *
+ * ============================================================================
+ * SUBSERIES SPECIFICATION: T50B MOTHERBOARD LINE
+ * ============================================================================
+ * Parent Fleet: en751627_zyxel_T50_series.dtsi
+ * Targets: EMG3525, VMG3625, EMG5523, VMG8623
+ * Constraints: Restricts generic XHCI blocks to drop USB 3.0 transceiver paths.
+ */
+
+#include "en751627_zyxel_T50_series.dtsi"
+
+
+
+&usb {
+	/* Target configuration matching the standard MTK XHCI controller layout */
+	usb3-ports {
+		/delete-node/ port@1; /* Erase unpopulated hardware paths */
+	};
+};
