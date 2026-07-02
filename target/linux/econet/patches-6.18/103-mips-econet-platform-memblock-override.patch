@@ -1,0 +1,12 @@
+--- a/arch/mips/econet/init.c
++++ b/arch/mips/econet/init.c
+@@ -43,6 +43,9 @@ void __init prom_init(void)
+ /* 2. Parse the DT and find memory */
+ void __init plat_mem_setup(void)
+ {
++	/* Force baseline 256MB KSEG0 memory pool mapping directly to handle extended boot arguments */
++	add_memory_region(0x80000000, 0x10000000, BOOT_MEM_RAM);
++
+ 	void *dtb;
+ 
+ 	set_io_port_base(KSEG1);
