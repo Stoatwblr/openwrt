@@ -10,6 +10,16 @@
 	#address-cells = <1>;
 	#size-cells = <1>;
 
+	memory@80000000 {
+    	device_type = "memory";
+		reg = <0x80000000 0x10000000>; /* Full 256MB window, validating up to 0x90000000 */
+	};
+
+	/* Define the common tclinux partitioning skeleton if not already present upstream */
+	soc {
+		/* Shared system bus and peripheral layouts belong here */
+	};
+
 	hpt_clock: clock {
 		compatible = "fixed-clock";
 		#clock-cells = <0>;
@@ -242,5 +252,15 @@
 		interrupt-parent = <&gic>;
 		interrupts = <GIC_SHARED 17 IRQ_TYPE_LEVEL_HIGH>;
 		usb3-lpm-capable;
+	};
+
+	ethernet: ethernet@1fb50000 {
+    	compatible = "econet,en751221-eth";
+    	reg = <0x1fb50000 0x10000>;
+    	interrupt-parent = <&gic>;
+    	interrupts = <GIC_SHARED 39 IRQ_TYPE_LEVEL_HIGH>;
+                
+    	#address-cells = <1>;
+    	#size-cells = <0>;
 	};
 };
