@@ -1,9 +1,7 @@
 --- a/arch/mips/kernel/setup.c
 +++ b/arch/mips/kernel/setup.c
-@@ -628,6 +628,8 @@ void __init setup_arch(char **cmdline_p)
+@@ -635,3 +635,5 @@
+ void __init setup_arch(char **cmdline_p)
  {
-  cpu_probe();
- 
-+ memblock_add(0x80000000, 0x10000000);
++	memblock_add(0x80000000, 0x10000000);
 +
-  /* After this line standard kernel setup continues */
