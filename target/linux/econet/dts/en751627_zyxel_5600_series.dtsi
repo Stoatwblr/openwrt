@@ -4,7 +4,7 @@
  * Copyright (C) 2026 OpenWrt.org
  *
  * ============================================================================
- * INTERMEDIATE SERIES SUMMARY: ZYXEL EN751627 WI-FI 6 (T0) GENERATION
+ * INTERMEDIATE SERIES SUMMARY: ZYXEL EN751627 WI-FI 6 (5600) GENERATION
  * ============================================================================
  * Core Baseline: Inherits en751627_zyxel.dtsi
  * Wireless Driver Target: MediaTek mt79 Modern Multi-User MIMO Frameworks
@@ -15,7 +15,8 @@
 
 
 &usb {
-	status = "okay";
+  /* USB 3.0 super-speed controller paths remain fully uninhibited */
+  /* Target configuration matching the standard MTK XHCI controller layout */
 };
 
 &pcie0 {
@@ -27,7 +28,7 @@
                 device_type = "pci";
 
                 wifi@0,0 {
-                        compatible = "mediatek,mt7915";
+                        compatible = "mediatek,mt7916";
                         reg = <0x0000 0 0 0 0>;
                         /* Direct driver to extract its mapping out of the romfile partition block */
                         mediatek,mtd-eeprom = <&nand 0x040600>; 

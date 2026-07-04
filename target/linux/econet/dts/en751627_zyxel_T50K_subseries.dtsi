@@ -35,3 +35,36 @@
 &dsl_modem {
 	status = "okay"; /* Activate the open-ended VDSL copper modem engine loop */
 };
+
+&pcie0 {
+        status = "okay";
+
+        pcie-bridge {
+                #address-cells = <3>;
+                #size-cells = <2>;
+                device_type = "pci";
+
+                wifi@0,0 {
+                        compatible = "mediatek,mt7615";
+                        reg = <0x0000 0 0 0 0>;
+                        mediatek,mtd-eeprom = <&nand 0x040000>;
+                };
+        };
+};
+
+&pcie1 {
+        status = "okay";
+
+        pcie-bridge {
+                #address-cells = <3>;
+                #size-cells = <2>;
+                device_type = "pci";
+
+                wifi@0,0 {
+                        compatible = "mediatek,mt7615";
+                        reg = <0x0000 0 0 0 0>;
+                        /* Points to the secondary radio calibration data segment */
+                        mediatek,mtd-eeprom = <&nand 0x048000>;
+                };
+        };
+};

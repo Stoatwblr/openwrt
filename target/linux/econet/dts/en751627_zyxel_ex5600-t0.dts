@@ -12,7 +12,7 @@
  */
 
 /dts-v1/;
-#include "en751627_zyxel_3301_subseries.dtsi"
+#include "en751627_zyxel_5600_series.dtsi"
 
 / {
 	model = "Zyxel EX5601-T0 / EX5600-T0 Flagship";
