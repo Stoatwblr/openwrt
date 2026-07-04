@@ -5,8 +5,9 @@ SUBTARGET:=en751627
 BOARDNAME:=EN7516 and EN7527 based boards
 CPU_TYPE:=24kc
 KERNELNAME:=vmlinuz.bin
+FEATURES:=pci page_pool
 
-DEFAULT_PACKAGES += kmod-leds-gpio kmod-gpio-button-hotplug wpad-basic-mbedtls
+DEFAULT_PACKAGES += kmod-leds-gpio kmod-gpio-button-hotplug wpad-mbedtls 
 
 define Target/Description
 	Build firmware images for EcoNet EN7516 and EN7527 based boards.
