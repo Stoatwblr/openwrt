@@ -14,19 +14,15 @@ define Device/en751627-zyxel-base
   BLOCKSIZE := 128k
   PAGESIZE := 2048k
 
-  # FIXED: Locks the big-endian flag directly to this device context
   DEVICE_TRX_ENDIAN := be
+
+	KERNEL_NAME := vmlinuz.bin
 
   IMAGES := sysupgrade.bin tclinux.trx
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 
-  # FIXED: Compresses the kernel into its own isolated, pure LZMA stream first.
-  # Then, it invokes OpenWrt's native tclinux-trx packager tool, passing the 
-  # separate, raw root.squashfs binary downstream without scrambling the entry vectors.
   IMAGE/tclinux.trx := append-kernel | lzma | tclinux-trx
 
-  # FIXED: Stripped the trailing uImage layers from the base kernel definition 
-  # to deliver a pristine raw binary to our image pipelines.
   KERNEL := kernel-bin | append-dtb
 endef
 
@@ -35,14 +31,14 @@ endef
 # ============================================================================
 define Device/zyxel-t50b-base
   $(Device/en751627-zyxel-base)
-  DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2 kmod-mt7603 kmod-mt76x2
+  DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2 kmod-mt7603 kmod-mt76x2 mt7603-firmware mt76x2-firmware
 endef
 
 define Device/zyxel_emg3525-t50b
   $(Device/zyxel-t50b-base)
   DEVICE_MODEL := EMG3525-T50B
   DEVICE_DTS := en751627_zyxel_emg3525-t50b
-  SUPPORTED_DEVICES := zyxel,emg3525-t50b
+  SUPPORTED_DEVICES += zyxel,emg3525-t50b
 endef
 TARGET_DEVICES += zyxel_emg3525-t50b
 
@@ -78,7 +74,7 @@ TARGET_DEVICES += zyxel_vmg8623-t50b
 # ============================================================================
 define Device/zyxel-t50k-base
   $(Device/en751627-zyxel-base)
-  DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2 kmod-usb3 kmod-mt7615e
+  DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2 kmod-usb3 kmod-mt7615e mt7615-firmware
 endef
 
 define Device/zyxel_vmg3927-t50k
@@ -113,7 +109,7 @@ TARGET_DEVICES += zyxel_vmg8825-t50k
 # ============================================================================
 define Device/zyxel-3300-base
   $(Device/en751627-zyxel-base)
-  DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2 kmod-mt7915e kmod-voip-slic-si32280
+  DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2 kmod-usb3 kmod-mt7915e mt7915-firmware
 endef
 
 define Device/zyxel_ex3300-t0
@@ -121,6 +117,7 @@ define Device/zyxel_ex3300-t0
   DEVICE_MODEL := EX3300-T0
   DEVICE_DTS := en751627_zyxel_ex3300-t0
   SUPPORTED_DEVICES := zyxel,ex3300-t0
+  DEVICE_PACKAGES += kmod-voip-slic-si32280
 endef
 TARGET_DEVICES += zyxel_ex3300-t0
 
@@ -129,7 +126,7 @@ define Device/zyxel_dx3300-t0
   DEVICE_MODEL := DX3300-T0
   DEVICE_DTS := en751627_zyxel_dx3300-t0
   SUPPORTED_DEVICES := zyxel,dx3300-t0
-  DEVICE_PACKAGES += kmod-econet-dsl dsl-utils
+  DEVICE_PACKAGES += kmod-econet-dsl dsl-utils kmod-voip-slic-si32280
 endef
 TARGET_DEVICES += zyxel_dx3300-t0
 
@@ -138,7 +135,7 @@ define Device/zyxel_ex3301-t0
   DEVICE_MODEL := EX3301-T0
   DEVICE_DTS := en751627_zyxel_ex3301-t0
   SUPPORTED_DEVICES := zyxel,ex3301-t0
-  DEVICE_PACKAGES += kmod-usb3
+  DEVICE_PACKAGES += kmod-voip-slic-si32280
 endef
 TARGET_DEVICES += zyxel_ex3301-t0
 
@@ -147,16 +144,15 @@ define Device/zyxel_dx3301-t0
   DEVICE_MODEL := DX3301-T0
   DEVICE_DTS := en751627_zyxel_dx3301-t0
   SUPPORTED_DEVICES := zyxel,dx3301-t0
-  DEVICE_PACKAGES += kmod-usb3 kmod-econet-dsl dsl-utils
+  DEVICE_PACKAGES += kmod-econet-dsl dsl-utils kmod-voip-slic-si32280
 endef
 TARGET_DEVICES += zyxel_dx3301-t0
 
 define Device/zyxel_wx3100-t0
-  $(Device/en751627-zyxel-base)
+  $(Device/zyxel-3300-base)
   DEVICE_MODEL := WX3100-T0
   DEVICE_DTS := en751627_zyxel_wx3100-t0
   SUPPORTED_DEVICES := zyxel,wx3100-t0
-  DEVICE_PACKAGES := kmod-mt7915e
 endef
 TARGET_DEVICES += zyxel_wx3100-t0
 
@@ -165,7 +161,7 @@ TARGET_DEVICES += zyxel_wx3100-t0
 # ============================================================================
 define Device/zyxel-5600-base
   $(Device/en751627-zyxel-base)
-  DEVICE_PACKAGES := kmod-mt7915e kmod-msc-2.5g-phy
+  DEVICE_PACKAGES := kmod-mt7915e kmod-msc-2.5g-phy mt7916-firmware mt7915-firmware
 endef
 
 define Device/zyxel_ex5600-t0
