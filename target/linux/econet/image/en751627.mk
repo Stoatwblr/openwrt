@@ -31,7 +31,7 @@ endef
 # ============================================================================
 define Device/zyxel-t50b-base
   $(Device/en751627-zyxel-base)
-  DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2 kmod-mt7603 kmod-mt76x2 mt7603-firmware mt76x2-firmware
+  DEVICE_PACKAGES += kmod-usb-ohci kmod-usb2 kmod-mt7603 kmod-mt76x2 kmod-mt7603-firmware kmod-mt76x2-firmware
 endef
 
 define Device/zyxel_emg3525-t50b
@@ -74,7 +74,7 @@ TARGET_DEVICES += zyxel_vmg8623-t50b
 # ============================================================================
 define Device/zyxel-t50k-base
   $(Device/en751627-zyxel-base)
-  DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2 kmod-usb3 kmod-mt7615e mt7615-firmware
+  DEVICE_PACKAGES += kmod-usb-ohci kmod-usb2 kmod-usb3 kmod-mt7615e mt7615-firmware
 endef
 
 define Device/zyxel_vmg3927-t50k
@@ -109,7 +109,7 @@ TARGET_DEVICES += zyxel_vmg8825-t50k
 # ============================================================================
 define Device/zyxel-3300-base
   $(Device/en751627-zyxel-base)
-  DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2 kmod-usb3 kmod-mt7915e mt7915-firmware
+  DEVICE_PACKAGES += kmod-usb-ohci kmod-usb2 kmod-usb3 kmod-mt7915e kmod-mt7915-firmware
 endef
 
 define Device/zyxel_ex3300-t0
@@ -161,7 +161,7 @@ TARGET_DEVICES += zyxel_wx3100-t0
 # ============================================================================
 define Device/zyxel-5600-base
   $(Device/en751627-zyxel-base)
-  DEVICE_PACKAGES := kmod-mt7915e kmod-msc-2.5g-phy mt7916-firmware mt7915-firmware
+  DEVICE_PACKAGES += kmod-mt7915e kmod-msc-2.5g-phy kmod-mt7916-firmware kmod-mt7915-firmware
 endef
 
 define Device/zyxel_ex5600-t0
