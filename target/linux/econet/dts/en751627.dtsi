@@ -16,6 +16,10 @@
     reg = <0x0 0x0 0x0 0x10000000>; /* High 32-bit cells set to 0x0 */
 	};
 
+	chosen {
+		bootargs = "console=ttyS0,115200 earlycon=uart8250,mmio32,0x1fbf0000)";
+	};
+
 	hpt_clock: clock {
 		compatible = "fixed-clock";
 		#clock-cells = <0>;
@@ -245,6 +249,7 @@
 		  interrupts = <GIC_SHARED 17 IRQ_TYPE_LEVEL_HIGH>;
 		  usb3-lpm-capable;
  	  };
+
 	  uart: serial@1fbf0000 {
 		  compatible = "airoha,en7523-uart";
 		  reg = <0x1fbf0000 0x30>;
@@ -261,10 +266,12 @@
       compatible = "econet,en751221-eth";
       reg = <0x1fb50000 0x10000>;
       interrupt-parent = <&gic>;
-      interrupts = <GIC_SHARED 39 IRQ_TYPE_LEVEL_HIGH>;
-                
-      #address-cells = <1>;
-      #size-cells = <0>;
+			interrupts = <GIC_SHARED 20 IRQ_TYPE_LEVEL_HIGH>,
+			             <GIC_SHARED 21 IRQ_TYPE_LEVEL_HIGH>;
+			
+			/* Provide the missing system controllers hardware reset lines pointer */
+			resets = <&scu 24>;
+			status = "disabled";
     };
 
     switch@1fb50000 {

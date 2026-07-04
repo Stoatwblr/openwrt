@@ -86,6 +86,7 @@
 
 &nand {
 	status = "okay";
+
 	partitions {
 		compatible = "fixed-partitions";
 		#address-cells = <1>;
@@ -96,23 +97,33 @@
 			reg = <0x0 0x40000>;
 			read-only;
 		};
+
 		partition@40000 {
-			label = "kernel";
+			label = "romfile";
 			reg = <0x40000 0x400000>;
-		};  
-		partition@440000 {
+			read-only;
+		};
+
+		partition@80000 {
+			label = "kernel";
+			reg = <0x80000 0x400000>; /* Matches the script's exact 4MB PAD_ROOTFS_OFFSET_TO limit */
+		};
+
+		partition@480000 {
 			label = "rootfs";
-			reg = <0x440000 0x3600000>; /* Symmetrical Target 1: 54MB */
+			reg = <0x480000 0x3600000>; /* File system block lands precisely on this physical sector boundary */
 		};
-		partition@3A40000 {
+
+		partition@3a80000 {
 			label = "kernel_alt";
-			reg = <0x3A40000 0x400000>;
+			reg = <0x3a80000 0x400000>;
 		};
-		rootfs_alt_partition: partition@3E40000 {
+
+		partition@3e80000 {
 			label = "rootfs_alt";
-			reg = <0x3E40000 0x3600000>; /* Symmetrical Target 2: 54MB */
+			reg = <0x3e80000 0x3500000>;
 		};
-	};
+  };
 };
 
 /* Reference the internal ethernet engine handle label natively */
