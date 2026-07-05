@@ -17,7 +17,7 @@ define KernelPackage/econet-eth
   TITLE:=EcoNet EN751221 Ethernet Driver
   DEPENDS:=@TARGET_econet
   FILES:=$(PKG_BUILD_DIR)/econet-eth.ko
-  AUTOLOAD:=$(call AutoLoad,90,econet-eth)
+  AUTOLOAD:=$(call AutoLoad,90,econet_eth)
 endef
 
 define KernelPackage/econet-eth/description

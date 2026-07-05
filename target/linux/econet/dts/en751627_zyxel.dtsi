@@ -131,31 +131,30 @@
 	status = "okay";
 };
 
-
-/* Override only the physical wiring properties for the Zyxel board ports */
+/* Override the 0-4 zero-based physical port assignments for Zyxel hardware */
 &switch_ports {
-	port@0 {
-		status = "okay";
-		label = "lan1";
-	};
+  port@0 {
+    status = "okay";
+    label = "lan1";
+  };
 
-	port@1 {
-		status = "okay";
-		label = "lan2";
-	};
+  port@1 {
+    status = "okay";
+    label = "lan2";
+  };
 
-	port@2 {
-		status = "okay";
-		label = "lan3";
-	};
+  port@2 {
+    status = "okay";
+    label = "lan3";
+  };
 
-	port@3 {
-		status = "okay";
-		label = "lan4";
-	};
+  port@3 {
+    status = "okay";
+    label = "lan4";
+  };
 
-	port@4 {
-		status = "okay";
-		label = "wan";
-	};
+  port@4 {
+    status = "okay";
+    label = "wan";
+  };
 };
