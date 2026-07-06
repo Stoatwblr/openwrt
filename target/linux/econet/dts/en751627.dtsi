@@ -263,11 +263,12 @@
 	  };
 
     ethernet: ethernet@1fb50000 {
-      compatible = "airoha,en7581-eth";
+      compatible = "airoha,en7512-eth","syscon";
       reg = <0x1fb50000 0x10000>;
       interrupt-parent = <&gic>;
 			interrupts = <GIC_SHARED 20 IRQ_TYPE_LEVEL_HIGH>,
 			             <GIC_SHARED 21 IRQ_TYPE_LEVEL_HIGH>;
+      interrupt-names = "fe", "pdma"; /* Defined here natively at the silicon level */
 			resets = <&scu 24>;
       reset-names = "fe";
 			status = "okay";

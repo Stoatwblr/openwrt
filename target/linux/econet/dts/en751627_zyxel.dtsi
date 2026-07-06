@@ -98,11 +98,30 @@
 			read-only;
 		};
 
-		partition@40000 {
-			label = "romfile";
-			reg = <0x40000 0x400000>;
-			read-only;
-		};
+    partition@40000 {
+      label = "romfile";
+      reg = <0x40000 0x400000>;
+      read-only;
+
+      nvmem-layout {
+        compatible = "fixed-layout";
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        /* Factory Hardcoded Identification Identifiers */
+        board_id: board-id@0 { reg = <0x0 0x20>; type = "string"; };
+        serial_number: serial@20 { reg = <0x20 0x20>; type = "string"; };
+
+        /* The Uniform Triple MAC Matrix */
+        mac_ethernet: mac@40 { reg = <0x40 0x6>; };
+        mac_wlan_2g:  mac@46 { reg = <0x46 0x6>; };
+        mac_wlan_5g:  mac@4c { reg = <0x4c 0x6>; };
+
+        /* Shared EEPROM Data Targets */
+        wifi_eeprom_2g: eeprom@600  { reg = <0x600 0x1000>; };
+        wifi_eeprom_5g: eeprom@4600 { reg = <0x4600 0x1000>; };
+      };
+    }
 
 		partition@80000 {
 			label = "kernel";
@@ -126,8 +145,10 @@
   };
 };
 
-/* Reference the internal ethernet engine handle label natively */
+/* Bind standard parent drivers to these unified cells */
 &ethernet {
+  nvmem-cells = <&mac_ethernet>;
+  nvmem-cell-names = "mac-address";
 	status = "okay";
 };
 
@@ -145,4 +166,30 @@
   port@2 { status = "okay"; };
   port@3 { status = "okay"; };
   port@4 { status = "okay"; };
+};
+
+
+/* Attach wireless interfaces directly to their dedicated cells */
+&pcie0 {
+    status = "okay";
+    pcie-bridge {
+        wifi@0,0 {
+            compatible = "mediatek,mt7915";
+            reg = <0x0000 0 0 0 0>;
+            nvmem-cells = <&wifi_eeprom_2g>, <&mac_wlan_2g>;
+            nvmem-cell-names = "eeprom", "mac-address";
+        };
+    };
+};
+
+&pcie1 {
+    status = "okay";
+    pcie-bridge {
+        wifi@0,0 {
+            compatible = "mediatek,mt7915";
+            reg = <0x0000 0 0 0 0>;
+            nvmem-cells = <&wifi_eeprom_5g>, <&mac_wlan_5g>;
+            nvmem-cell-names = "eeprom", "mac-address";
+        };
+    };
 };

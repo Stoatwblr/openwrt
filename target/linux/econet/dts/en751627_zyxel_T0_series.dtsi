@@ -18,37 +18,27 @@
 	status = "okay";
 };
 
+/* target/linux/econet/dts/en751627_zyxel_T0_series.dtsi */
 &pcie0 {
-	status = "okay";
-
-        pcie-bridge {
-                #address-cells = <3>;
-                #size-cells = <2>;
-                device_type = "pci";
-
-                wifi@0,0 {
-                        compatible = "mediatek,mt7915";
-                        reg = <0x0000 0 0 0 0>;
-                        /* Direct driver to extract its mapping out of the romfile partition block */
-                        mediatek,mtd-eeprom = <&nand 0x040600>; 
-                };
+    status = "okay";
+    pcie-bridge {
+        wifi@0,0 {
+            compatible = "mediatek,mt7915";
+            reg = <0x0000 0 0 0 0>;
+            /* Point cleanly to the early block window inside romfile */
+            mediatek,mtd-eeprom = <&nand 0x040000>; 
         };
+    };
 };
 
 &pcie1 {
-	status = "okay";
-
-        pcie-bridge {
-                #address-cells = <3>;
-                #size-cells = <2>;
-                device_type = "pci";
-
-                wifi@0,0 {
-                        compatible = "mediatek,mt7915";
-                        reg = <0x0000 0 0 0 0>;
-                        /* Match the relative offset structure for the second external radio card */
-                        mediatek,mtd-eeprom = <&nand 0x044600>;
-                };
+    status = "okay";
+    pcie-bridge {
+        wifi@0,0 {
+            compatible = "mediatek,mt7915";
+            reg = <0x0000 0 0 0 0>;
+            /* Offset cleanly inside the 0x400000 size limit of the partition */
+            mediatek,mtd-eeprom = <&nand 0x042000>; 
         };
+    };
 };
-
