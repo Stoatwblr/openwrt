@@ -263,39 +263,61 @@
 	  };
 
     ethernet: ethernet@1fb50000 {
-      compatible = "econet,en7528-eth";
+      compatible = "airoha,en7581-eth";
       reg = <0x1fb50000 0x10000>;
       interrupt-parent = <&gic>;
 			interrupts = <GIC_SHARED 20 IRQ_TYPE_LEVEL_HIGH>,
 			             <GIC_SHARED 21 IRQ_TYPE_LEVEL_HIGH>;
 			resets = <&scu 24>;
+      reset-names = "fe";
 			status = "okay";
+
+      gmac0: mac@0 {
+        compatible = "mediatek,eth-mac";
+        reg = <0>;
+        phy-mode = "trgmii";
+
+        fixed-link {
+          speed = <1000>;
+          full-duplex;
+        };
+      };
     };
 
-    switch@1fb50000 {
-      compatible = "mediatek,mt7530";
+    /* Wrap the MT7530 register space inside an internal platform MDIO tracking node */
+    mdio0: mdio@1fb50000 {
+      #address-cells = <1>;
+      #size-cells = <0>;
+      compatible = "mediatek,mt7621-mdio";
       reg = <0x1fb50000 0x10000>;
       status = "okay";
 
-      switch_ports: ports {
-        #address-cells = <1>;
-        #size-cells = <0>;
+      switch0: switch@1f {
+        compatible = "mediatek,mt7530-mmio";
+        reg = <0x1f>;
+        status = "okay";
 
-        port@0 { reg = <0>; status = "disabled"; };
-        port@1 { reg = <1>; status = "disabled"; };
-        port@2 { reg = <2>; status = "disabled"; };
-        port@3 { reg = <3>; status = "disabled"; };
-        port@4 { reg = <4>; status = "disabled"; };
+        switch_ports: ports {
+          #address-cells = <1>;
+          #size-cells = <0>;
 
-        port@6 {
-          reg = <6>;
-          label = "cpu";
-          ethernet = <&ethernet>;
-          phy-mode = "trgmii";
+          /* Map sequential zero-based hardware ports as individual, standard DSA interfaces */
+          port@0 { reg = <0>; label = "lan1"; status = "disabled"; };
+          port@1 { reg = <1>; label = "lan2"; status = "disabled"; };
+          port@2 { reg = <2>; label = "lan3"; status = "disabled"; };
+          port@3 { reg = <3>; label = "lan4"; status = "disabled"; };
+          port@4 { reg = <4>; label = "wan";  status = "disabled"; };
 
-          fixed-link {
-            speed = <1000>;
-            full-duplex;
+          port@6 {
+            reg = <6>;
+            label = "cpu";
+            ethernet = <&ethernet>;
+            phy-mode = "trgmii";
+
+            fixed-link {
+              speed = <1000>;
+              full-duplex;
+            };
           };
         };
       };
