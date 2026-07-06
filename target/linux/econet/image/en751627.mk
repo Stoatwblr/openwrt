@@ -38,7 +38,7 @@ define Device/zyxel_emg3525-t50b
   $(Device/zyxel-t50b-base)
   DEVICE_MODEL := EMG3525-T50B
   DEVICE_DTS := en751627_zyxel_emg3525-t50b
-  SUPPORTED_DEVICES += zyxel,emg3525-t50b
+  SUPPORTED_DEVICES := zyxel,emg3525-t50b
 endef
 TARGET_DEVICES += zyxel_emg3525-t50b
 

@@ -67,4 +67,4 @@
 			mediatek,mtd-eeprom = <&romfile 0x4600>;
 		};
 	};
-}
+};
