@@ -1,0 +1,65 @@
+#!/bin/sh
+
+. /lib/functions/ucidef.sh
+
+board_config_update
+
+case "$(board_name)" in
+# --- 3300 Sub-Series (USB 2.0, No VoIP SLIC Module) ---
+"zyxel,dx3300-t0")
+	ucidef_set_model_name "Zyxel DX3300-T0 VDSL2 Router (USB2, No VoIP)"
+	;;
+"zyxel,ex3300-t0")
+	ucidef_set_model_name "Zyxel EX3300-T0 Gateway (USB2, No VoIP)"
+	;;
+
+# --- 3301 Sub-Series / T0 Core (USB 3.0, Equipped with VoIP SLIC) ---
+"zyxel,dx3301-t0")
+	ucidef_set_model_name "Zyxel DX3301-T0 Integrated Access Gateway"
+	;;
+"zyxel,ex3301-t0")
+	ucidef_set_model_name "Zyxel EX3301-T0 Gateway (Ethernet WAN)"
+	;;
+"zyxel,wx3100-t0")
+	ucidef_set_model_name "Zyxel WX3100-T0 802.11r Wireless Extender"
+	;;
+
+# --- T50B Sub-Series (MediaTek Native mt76 Wi-Fi 5 Platforms) ---
+"zyxel,vmg3625-t50b")
+	ucidef_set_model_name "Zyxel VMG3625-T50B Router"
+	;;
+"zyxel,vmg8623-t50b")
+	ucidef_set_model_name "Zyxel VMG8623-T50B IAD Gateway"
+	;;
+"zyxel,emg3525-t50b")
+	ucidef_set_model_name "Zyxel EMG3525-T50B Gateway"
+	;;
+"zyxel,emg5523-t50b")
+	ucidef_set_model_name "Zyxel EMG5523-T50B Dual-Band Gateway"
+	;;
+
+# --- T50K Sub-Series (Quantenna Driver-Bound Wi-Fi 5 Platforms) ---
+"zyxel,vmg3927-t50k")
+	ucidef_set_model_name "Zyxel VMG3927-T50K VDSL2 Router"
+	;;
+"zyxel,vmg8825-t50k")
+	ucidef_set_model_name "Zyxel VMG8825-T50K Multi-Service Gateway"
+	;;
+"zyxel,emg5723-t50k")
+	ucidef_set_model_name "Zyxel EMG5723-T50K Gateway"
+	;;
+
+# --- 5600 Series / T1 Advanced Multi-Gig Families (2.5GbE PHY Traces) ---
+"zyxel,ex5600-t0" | "zyxel,ex5601-t0")
+	ucidef_set_model_name "Zyxel EX5601-T0 Multi-Gig Core Gateway"
+	;;
+"zyxel,ex5600-t1" | "zyxel,ex5601-t1")
+	ucidef_set_model_name "Zyxel EX5601-T1 Multi-Gig Gateway (Revision 1)"
+	;;
+"zyxel,wx5600-t0")
+	ucidef_set_model_name "Zyxel WX5600-T0 Multi-Gig 802.11r Extender"
+	;;
+esac
+
+board_config_commit
+exit 0

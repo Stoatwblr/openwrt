@@ -1,43 +1,69 @@
+#!/bin/sh
+
 . /lib/functions/system.sh
 . /lib/functions/uci-defaults.sh
 
 econet_setup_interfaces()
 {
-	local board="$1"
+  local board="$1"
 
-	case "$board" in
-	*)
-		# econet lacks DSA support now
-		ucidef_set_interface_lan "eth0"
-		;;
-	esac
+  case "$board" in
+  # --- Zyxel Cut-Down Extenders (2-Port DSA Bridge Focus) ---
+  "zyxel,wx3100-t0" | "zyxel,wx5600-t0")
+    ucidef_set_interfaces_lan_wan "lan1 lan2" ""
+    ;;
+
+  # --- Zyxel Standard Gateways & Advanced Multi-Gig Platforms (4xLAN + 1xWAN) ---
+  "zyxel,dx3300-t0" | "zyxel,ex3300-t0" | \
+  "zyxel,dx3301-t0" | "zyxel,ex3301-t0" | \
+  "zyxel,ex5600-t0" | "zyxel,ex5601-t0" | "zyxel,ex5600-t1" | "zyxel,ex5601-t1" | \
+  "zyxel,vmg3625-t50b" | "zyxel,vmg8623-t50b" | "zyxel,emg3525-t50b" | "zyxel,emg5523-t50b" | \
+  "zyxel,vmg3927-t50k" | "zyxel,vmg8825-t50k" | "zyxel,emg5723-t50k")
+    ucidef_set_interfaces_lan_wan "lan1 lan2 lan3 lan4" "wan"
+    ;;
+
+  # --- Default Target Fallback (Preserves Original Developer Logic) ---
+  *)
+    # econet lacks DSA support now on legacy chipsets
+    ucidef_set_interface_lan "eth0"
+    ;;
+  esac
 }
 
 econet_setup_macs()
 {
-	local board="$1"
-	local lan_mac=""
-	local wan_mac=""
-	local label_mac=""
+  local board="$1"
+  local lan_mac=""
+  local wan_mac=""
+  local label_mac=""
 
-	case "$board" in
-	huawei,hg2821t-u)
-		local conffile="/tmp/configuration_a/factory.conf"
-		lan_mac=$(get_mac_ascii "$conffile" brmac)
-		wan_mac=$(get_mac_ascii "$conffile" internetmac)
-		label_mac=$wan_mac
-		;;
-	esac
+  case "$board" in
+  # --- Legacy Huawei Node: Preserved exactly as written ---
+  huawei,hg2821t-u)
+    local conffile="/tmp/configuration_a/factory.conf"
+    lan_mac=$(get_mac_ascii "$conffile" brmac)
+    wan_mac=$(get_mac_ascii "$conffile" internetmac)
+    label_mac=$wan_mac
+    ;;
 
-	[ -n "$lan_mac" ] && ucidef_set_interface_macaddr "lan" "$lan_mac"
-	[ -n "$wan_mac" ] && ucidef_set_interface_macaddr "wan" "$wan_mac"
-	[ -n "$label_mac" ] && ucidef_set_label_macaddr "$label_mac"
+  # --- Modern Zyxel Fleet: Left Empty by Design ---
+  # Because your en751627_zyxel.dtsi leverages the native kernel NVMEM 
+  # engine (nvmem-cells = <&mac_ethernet>), the driver sets up the 
+  # hardware MAC interfaces on boot. User-space does not need to extract 
+  # or patch them via text scripts, keeping configuration fast.
+  *)
+    ;;
+  esac
+
+  [ -n "$lan_mac" ] && ucidef_set_interface_macaddr "lan" "$lan_mac"
+  [ -n "$wan_mac" ] && ucidef_set_interface_macaddr "wan" "$wan_mac"
+  [ -n "$label_mac" ] && ucidef_set_label_macaddr "$label_mac"
 }
 
 board_config_update
 board=$(board_name)
-econet_setup_interfaces $board
-econet_setup_macs $board
+econet_setup_interfaces "$board"
+econet_setup_macs "$board"
 board_config_flush
 
 exit 0
