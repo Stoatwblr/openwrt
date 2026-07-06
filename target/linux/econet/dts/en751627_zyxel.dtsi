@@ -172,24 +172,8 @@
 /* Attach wireless interfaces directly to their dedicated cells */
 &pcie0 {
     status = "okay";
-    pcie-bridge {
-        wifi@0,0 {
-            compatible = "mediatek,mt7915";
-            reg = <0x0000 0 0 0 0>;
-            nvmem-cells = <&wifi_eeprom_2g>, <&mac_wlan_2g>;
-            nvmem-cell-names = "eeprom", "mac-address";
-        };
-    };
 };
 
 &pcie1 {
     status = "okay";
-    pcie-bridge {
-        wifi@0,0 {
-            compatible = "mediatek,mt7915";
-            reg = <0x0000 0 0 0 0>;
-            nvmem-cells = <&wifi_eeprom_5g>, <&mac_wlan_5g>;
-            nvmem-cell-names = "eeprom", "mac-address";
-        };
-    };
 };
