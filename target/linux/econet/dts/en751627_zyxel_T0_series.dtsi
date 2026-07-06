@@ -18,27 +18,49 @@
 	status = "okay";
 };
 
-/* target/linux/econet/dts/en751627_zyxel_T0_series.dtsi */
 &pcie0 {
     status = "okay";
     pcie-bridge {
-        wifi@0,0 {
-            compatible = "mediatek,mt7915";
-            reg = <0x0000 0 0 0 0>;
-            /* Point cleanly to the early block window inside romfile */
-            mediatek,mtd-eeprom = <&nand 0x040000>; 
-        };
+		  #address-cells = <3>;
+		  #size-cells = <2>;
+		  device_type = "pci";
+
+
+      wifi@0,0 {
+        /* Adding the trailing 'e' forces the driver to seek NVMEM handles */
+        compatible = "mediatek,mt7915e", "mediatek,mt7915";
+        reg = <0x0000 0 0 0 0>;
+
+
+			  /* Feed the primary 2.4G cell array tokens directly to the core driver */
+        nvmem-cells = <&wifi_eeprom_2g>, <&mac_wlan_2g>;
+        nvmem-cell-names = "eeprom", "mac-address";
+
+			  /* Change from absolute <&nand> to your relative <&romfile> phandle */
+			  mediatek,mtd-eeprom = <&romfile 0x600>;
+
+      };
     };
 };
 
 &pcie1 {
     status = "okay";
     pcie-bridge {
-        wifi@0,0 {
-            compatible = "mediatek,mt7915";
-            reg = <0x0000 0 0 0 0>;
-            /* Offset cleanly inside the 0x400000 size limit of the partition */
-            mediatek,mtd-eeprom = <&nand 0x042000>; 
-        };
+		  #address-cells = <3>;
+		  #size-cells = <2>;
+		  device_type = "pci";
+
+      wifi@0,0 {
+        /* Adding the trailing 'e' forces the driver to seek NVMEM handles */
+        compatible = "mediatek,mt7915e", "mediatek,mt7915";
+        reg = <0x0000 0 0 0 0>;
+            
+			  /* Feed the primary 5G cell array tokens directly to the core driver */
+        nvmem-cells = <&wifi_eeprom_5g>, <&mac_wlan_5g>;
+        nvmem-cell-names = "eeprom", "mac-address";
+
+			  /* Change from absolute <&nand> to your relative <&romfile> phandle */
+			  mediatek,mtd-eeprom = <&romfile 0x4600>;
+      };
     };
 };

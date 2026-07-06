@@ -14,8 +14,8 @@
 #include "en751627_zyxel_T0_series.dtsi"
 
 &usb {
-	/* Target configuration matching the standard MTK XHCI controller layout */
-	usb3-ports {
-		/delete-node/ port@1;
-	};
+  /* Keep only the rear USB 2.0 host engine active */
+  status = "okay";
 };
+
+/delete-node/ &voip_slic; /* Strip completely for the 3300 variants */

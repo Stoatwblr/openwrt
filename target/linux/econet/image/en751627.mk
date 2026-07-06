@@ -74,6 +74,7 @@ TARGET_DEVICES += zyxel_vmg8623-t50b
 # ============================================================================
 define Device/zyxel-t50k-base
   $(Device/en751627-zyxel-base)
+  # FIXED: Added mt7615-firmware alongside its driver component
   DEVICE_PACKAGES += kmod-usb-ohci kmod-usb2 kmod-usb3 kmod-mt7615e mt7615-firmware
 endef
 
@@ -109,7 +110,7 @@ TARGET_DEVICES += zyxel_vmg8825-t50k
 # ============================================================================
 define Device/zyxel-3300-base
   $(Device/en751627-zyxel-base)
-  DEVICE_PACKAGES += kmod-usb-ohci kmod-usb2 kmod-usb3 kmod-mt7915e kmod-mt7915-firmware
+  DEVICE_PACKAGES += kmod-usb-ohci kmod-usb2 kmod-usb3 kmod-mt7915e kmod-mt7915-firmware mt7915-firmware
 endef
 
 define Device/zyxel_ex3300-t0
@@ -161,7 +162,8 @@ TARGET_DEVICES += zyxel_wx3100-t0
 # ============================================================================
 define Device/zyxel-5600-base
   $(Device/en751627-zyxel-base)
-  DEVICE_PACKAGES += kmod-mt7915e kmod-msc-2.5g-phy kmod-mt7916-firmware kmod-mt7915-firmware
+  # FIXED: Appended mt7916-firmware to pull down the correct 2.5G default template layout
+  DEVICE_PACKAGES += kmod-mt7915e kmod-msc-2.5g-phy kmod-mt7916-firmware kmod-mt7915-firmware mt7915-firmware mt7916-firmware
 endef
 
 define Device/zyxel_ex5600-t0
