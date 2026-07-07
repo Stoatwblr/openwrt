@@ -263,7 +263,7 @@
 	  };
 
     ethernet: ethernet@1fb50000 {
-      compatible = "airoha,en7581-eth","syscon";
+      compatible = "airoha,en7512-eth","syscon";
       reg = <0x1fb50000 0x10000>;
       #address-cells = <1>;
       #size-cells = <1>;
@@ -274,7 +274,7 @@
       
       /* FIXED: Connect the hardware to the SoC system controller clock trees */
       clocks = <&scu 12>, <&scu 13>;
-      clock-names = "fe", "gdm";
+      clock-names = "sys", "fe";
       
 			resets = <&scu 24>;
       reset-names = "fe";

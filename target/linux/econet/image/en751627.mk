@@ -218,7 +218,5 @@ define Image/Prepare
 	# 1. Fetch and stage open-source wireless firmware assets from kernel.org
 	$(STAGING_DIR_HOST)/bin/bash ./sync_upstream_firmware.sh $(TARGET_DIR)
 
-	# 2. Extract and inject generic MediaTek proprietary DSL/VoIP modules
-	$(STAGING_DIR_HOST)/bin/bash ./extract_en751627_zyxel_blobs.sh $(TARGET_DIR)
 endef
 
