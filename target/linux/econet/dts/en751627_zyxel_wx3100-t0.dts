@@ -35,14 +35,9 @@
 	status = "disabled"; /* Unpopulated hardware broadband blocks */
 };
 
-&ethernet {
-	mdio-bus {
-		switch@1f {
-			ports {
-				port@2 { status = "disabled"; };
-				port@3 { status = "disabled"; };
-				port@4 { status = "disabled"; };
-			};
-		};
-	};
+/* FIXED: Target the nested switch ports directly via their phandle reference label */
+&switch_ports {
+  port@2 { status = "disabled"; };
+  port@3 { status = "disabled"; };
+  port@4 { status = "disabled"; };
 };
