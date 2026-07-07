@@ -12,7 +12,14 @@ REPO_BASE="../../../../"
 LOCAL_MT76_CLONE="${REPO_BASE}/../mt76"
 
 LOCAL_FW_CACHE="${REPO_BASE}/dl/firmware/mediatek"
-TARGET_ROOTFS="./build_dir/target-mips_1004kc_musl/root-econet"
+
+# Dynamically parse the active rootfs directory passed by the parent Makefile loop
+TARGET_ROOTFS="$1"
+
+if [ -z "$TARGET_ROOTFS" ]; then
+    # Safe local fallback if run manually from the terminal
+    TARGET_ROOTFS="./build_dir/target-mips_1004kc_musl/root-econet"
+fi
 
 # 2. HARD-ABORT CHECKPOINT: Validate that the mt76 clone physically exists
 if [ ! -d "${LOCAL_MT76_CLONE}" ] || [ ! -d "${LOCAL_MT76_CLONE}/firmware" ]; then

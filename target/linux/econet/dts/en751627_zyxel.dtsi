@@ -151,6 +151,18 @@
   nvmem-cells = <&mac_ethernet>;
   nvmem-cell-names = "mac-address";
 	status = "okay";
+
+	mac@0 {
+		status = "okay";
+		nvmem-cells = <&mac_ethernet>;
+		nvmem-cell-names = "mac-address";
+	};
+
+	mac@1 {
+		status = "okay";
+		nvmem-cells = <&mac_wan>;
+		nvmem-cell-names = "mac-address";
+	};
 };
 
 &mdio0 {
