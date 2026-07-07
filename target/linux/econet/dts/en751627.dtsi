@@ -271,6 +271,11 @@
 			interrupts = <GIC_SHARED 20 IRQ_TYPE_LEVEL_HIGH>,
 			             <GIC_SHARED 21 IRQ_TYPE_LEVEL_HIGH>;
       interrupt-names = "fe", "pdma"; /* Defined here natively at the silicon level */
+      
+      /* FIXED: Connect the hardware to the SoC system controller clock trees */
+      clocks = <&scu 12>, <&scu 13>;
+      clock-names = "fe", "gdm";
+      
 			resets = <&scu 24>;
       reset-names = "fe";
 			status = "okay";
@@ -297,9 +302,9 @@
         reset-names = "mdio";
         status = "okay";
 
-        switch0: switch@1f {
+        switch0: switch@0 {
           compatible = "mediatek,mt7530"; /* Canonical DSA switch module token */
-          reg = <0x1f>;
+          reg = <0>;
 
           /* FIXED: Mandatory Multi-Chip Module tracking property flag */
           mediatek,mcm; 
