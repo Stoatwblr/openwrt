@@ -31,15 +31,13 @@
 		#address-cells = <3>;
 		#size-cells = <2>;
 		device_type = "pci";
+    ranges;
 
-		wifi@0,0 {
+		pci@0,0 {
 			compatible = "mediatek,mt7603";
 			reg = <0x0000 0 0 0 0>;
 
-      /* Mainline NVMEM cellular tracking mapping array */
-      nvmem-cells = <&wifi_eeprom_2g>, <&mac_wlan_2g>;
-      nvmem-cell-names = "eeprom", "mac-address";
- 			
+      /* this is t50-specific. Newer wifi moduiles use nvmem */
 			/* Relative phandle tells the legacy driver to pull from offset 0x600 */
 			mediatek,mtd-eeprom = <&romfile 0x600>;
 		};
@@ -54,15 +52,12 @@
 		#address-cells = <3>;
 		#size-cells = <2>;
 		device_type = "pci";
+    ranges;
 
-		wifi@0,0 {
+		pci@0,0 {
 			compatible = "mediatek,mt76x2";
 			reg = <0x0000 0 0 0 0>;
 			
-      /* Mainline NVMEM cellular tracking mapping array */
-      nvmem-cells = <&wifi_eeprom_5g>, <&mac_wlan_5g>;
-      nvmem-cell-names = "eeprom", "mac-address";
-
 			/* Relative phandle tells the legacy driver to pull from offset 0x4600 */
 			mediatek,mtd-eeprom = <&romfile 0x4600>;
 		};

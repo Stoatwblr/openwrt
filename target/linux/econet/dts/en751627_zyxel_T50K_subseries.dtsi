@@ -43,17 +43,14 @@
                 #address-cells = <3>;
                 #size-cells = <2>;
                 device_type = "pci";
+                ranges;
 
-                wifi@0,0 {
+                pci@0,0 {
                         compatible = "mediatek,mt7615e", "mediatek,mt7615";.
 
                         reg = <0x0000 0 0 0 0>;
-
-			                  /* Mainline NVMEM cellular tracking mapping array */
-			                  nvmem-cells = <&wifi_eeprom_2g>, <&mac_wlan_2g>;
-			                  nvmem-cell-names = "eeprom", "mac-address";
-
-                        mediatek,mtd-eeprom = <&romfile 0x600>;
+                        /*this is t50-specific. Wifi6 drivers use nvmem cells */
+y                        mediatek,mtd-eeprom = <&romfile 0x600>;
                 };
         };
 };
@@ -65,15 +62,11 @@
                 #address-cells = <3>;
                 #size-cells = <2>;
                 device_type = "pci";
+                ranges;
 
-                wifi@0,0 {
+                pci@0,0 {
                         compatible = "mediatek,mt7615e", "mediatek,mt7615";.
                         reg = <0x0000 0 0 0 0>;
-
-			                  /* Mainline NVMEM cellular tracking mapping array */
-			                  nvmem-cells = <&wifi_eeprom_5g>, <&mac_wlan_5g>;
-			                  nvmem-cell-names = "eeprom", "mac-address";
-
 
                         /* Points to the secondary radio calibration data segment */
                         mediatek,mtd-eeprom = <&romfile 0x4600>;

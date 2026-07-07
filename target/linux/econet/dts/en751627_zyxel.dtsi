@@ -116,6 +116,7 @@
         mac_ethernet: mac@40 { reg = <0x40 0x6>; };
         mac_wlan_2g:  mac@46 { reg = <0x46 0x6>; };
         mac_wlan_5g:  mac@4c { reg = <0x4c 0x6>; };
+        mac_wan:      mac@52 { reg = <0x52 0x6>; }; /* Fully tracks the 4th address */
 
         /* Shared EEPROM Data Targets */
         wifi_eeprom_2g: eeprom@600  { reg = <0x600 0x1000>; };

@@ -20,16 +20,6 @@
 	model = "Zyxel DX3300-T0";
 	compatible = "zyxel,dx3300-t0", "econet,en751627";
 
-	leds {
-		led_phone_green: phone_green {
-			label = "green:phone";
-			gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
-		};
-	};
-};
-
-&voip_slic {
-	status = "okay"; /* Activate open-ended VoIP SLIC hooks */
 };
 
 &dsl_modem {

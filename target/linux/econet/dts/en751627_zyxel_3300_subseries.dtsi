@@ -18,4 +18,6 @@
   status = "okay";
 };
 
-/delete-node/ &voip_slic; /* Strip completely for the 3300 variants */
+&voip_slic {
+  status = "disabled"; /* Soft-disable completely for the 3300 variants */
+};

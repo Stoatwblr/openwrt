@@ -8,23 +8,24 @@ econet_setup_interfaces()
   local board="$1"
 
   case "$board" in
-  # --- Zyxel Cut-Down Extenders (2-Port DSA Bridge Focus) ---
+  # --- Cut-Down Extender Enclosures (Only 2 physical rear ports exposed) ---
   "zyxel,wx3100-t0" | "zyxel,wx5600-t0")
+    # Groups the dual ports (1G or 2.5G) into a single management bridge
     ucidef_set_interfaces_lan_wan "lan1 lan2" ""
     ;;
 
-  # --- Zyxel Standard Gateways & Advanced Multi-Gig Platforms (4xLAN + 1xWAN) ---
+  # --- Standard Gateways & Advanced 5600 Multi-Gig series (4xLAN + 1xWAN) ---
   "zyxel,dx3300-t0" | "zyxel,ex3300-t0" | \
   "zyxel,dx3301-t0" | "zyxel,ex3301-t0" | \
   "zyxel,ex5600-t0" | "zyxel,ex5601-t0" | "zyxel,ex5600-t1" | "zyxel,ex5601-t1" | \
   "zyxel,vmg3625-t50b" | "zyxel,vmg8623-t50b" | "zyxel,emg3525-t50b" | "zyxel,emg5523-t50b" | \
   "zyxel,vmg3927-t50k" | "zyxel,vmg8825-t50k" | "zyxel,emg5723-t50k")
+    # Map ports 1-4 into LAN (regardless of speed mix) and route the combo port to WAN
     ucidef_set_interfaces_lan_wan "lan1 lan2 lan3 lan4" "wan"
     ;;
 
-  # --- Default Target Fallback (Preserves Original Developer Logic) ---
+  # --- Legacy Target Fallback (Preserves Original Developer Logic) ---
   *)
-    # econet lacks DSA support now on legacy chipsets
     ucidef_set_interface_lan "eth0"
     ;;
   esac
@@ -46,12 +47,15 @@ econet_setup_macs()
     label_mac=$wan_mac
     ;;
 
-  # --- Modern Zyxel Fleet: Left Empty by Design ---
-  # Because your en751627_zyxel.dtsi leverages the native kernel NVMEM 
-  # engine (nvmem-cells = <&mac_ethernet>), the driver sets up the 
-  # hardware MAC interfaces on boot. User-space does not need to extract 
-  # or patch them via text scripts, keeping configuration fast.
-  *)
+  # --- Zyxel Fleet User-Space Fallback ---
+  "zyxel,"*)
+    if [ -f "/sys/bus/nvmem/devices/romfile0/cells/mac_ethernet" ]; then
+       # Read directly from the newly operational active NVMEM sysfs cell
+       lan_mac=$(hexdump -v -e '1/1 "%02x:"' /sys/bus/nvmem/devices/romfile0/cells/mac_ethernet | sed 's/:$//')
+    else
+       # Fallback to the bootloader partition space if NVMEM is un-instantiated
+       lan_mac=$(mtd_get_mac_binary "bootloader" 0x40)
+    fi
     ;;
   esac
 

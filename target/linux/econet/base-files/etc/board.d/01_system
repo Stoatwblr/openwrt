@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. /lib/functions/ucidef.sh
+. /lib/functions/uci-defaults.sh
 
 board_config_update
 
@@ -61,5 +61,5 @@ case "$(board_name)" in
 	;;
 esac
 
-board_config_commit
+board_config_flush
 exit 0

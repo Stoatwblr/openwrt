@@ -24,9 +24,9 @@
 		  #address-cells = <3>;
 		  #size-cells = <2>;
 		  device_type = "pci";
+      ranges; /* Tells the system to translate memory blocks across the bridge */
 
-
-      wifi@0,0 {
+      pci@0,0 {
         /* Adding the trailing 'e' forces the driver to seek NVMEM handles */
         compatible = "mediatek,mt7915e", "mediatek,mt7915";
         reg = <0x0000 0 0 0 0>;
@@ -35,9 +35,6 @@
 			  /* Feed the primary 2.4G cell array tokens directly to the core driver */
         nvmem-cells = <&wifi_eeprom_2g>, <&mac_wlan_2g>;
         nvmem-cell-names = "eeprom", "mac-address";
-
-			  /* Change from absolute <&nand> to your relative <&romfile> phandle */
-			  mediatek,mtd-eeprom = <&romfile 0x600>;
 
       };
     };
@@ -49,8 +46,9 @@
 		  #address-cells = <3>;
 		  #size-cells = <2>;
 		  device_type = "pci";
+      ranges; /* Tells the system to translate memory blocks across the bridge */
 
-      wifi@0,0 {
+      pci@0,0 {
         /* Adding the trailing 'e' forces the driver to seek NVMEM handles */
         compatible = "mediatek,mt7915e", "mediatek,mt7915";
         reg = <0x0000 0 0 0 0>;
@@ -59,8 +57,7 @@
         nvmem-cells = <&wifi_eeprom_5g>, <&mac_wlan_5g>;
         nvmem-cell-names = "eeprom", "mac-address";
 
-			  /* Change from absolute <&nand> to your relative <&romfile> phandle */
-			  mediatek,mtd-eeprom = <&romfile 0x4600>;
       };
     };
 };
+

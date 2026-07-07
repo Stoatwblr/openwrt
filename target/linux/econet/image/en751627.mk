@@ -12,7 +12,7 @@ define Device/en751627-zyxel-base
   IMAGE_SIZE := 55296k
   KERNEL_SIZE := 4096k
   BLOCKSIZE := 128k
-  PAGESIZE := 2048k
+  PAGESIZE := 2048
 
   DEVICE_TRX_ENDIAN := be
 
@@ -210,4 +210,15 @@ define Device/zyxel_wx5600-t0
 endef
 TARGET_DEVICES += zyxel_wx5600-t0
 
-$(eval $(call BuildImage))
+
+# fetch the fw blobs
+
+
+define Image/Prepare
+	# 1. Fetch and stage open-source wireless firmware assets from kernel.org
+	$(STAGING_DIR_HOST)/bin/bash ./sync_upstream_firmware.sh
+
+	# 2. Extract and inject generic MediaTek proprietary DSL/VoIP modules
+	$(STAGING_DIR_HOST)/bin/bash ./extract_en751627_zyxel_blobs.sh
+endef
+

@@ -26,17 +26,16 @@
                 #address-cells = <3>;
                 #size-cells = <2>;
                 device_type = "pci";
+                ranges;
 
-                wifi@0,0 {
-                        compatible = "mediatek,mt7615e", "mediatek,mt7615";
+                pci@0,0 {
+                        compatible = "mediatek,mt7916e", "mediatek,mt7615e";
                         reg = <0x0000 0 0 0 0>;
                         
                         /* Mainline NVMEM cellular tracking mapping array */
 			                  nvmem-cells = <&wifi_eeprom_2g>, <&mac_wlan_2g>;
 			                  nvmem-cell-names = "eeprom", "mac-address";
 
-                        /* Relative phandle tells the legacy driver to pull from offset 0x600 */
-                        mediatek,mtd-eeprom = <&romfile 0x600>;
                 };
         };
 };
@@ -47,17 +46,16 @@
                 #address-cells = <3>;
                 #size-cells = <2>;
                 device_type = "pci";
+                ranges;
 
-                wifi@0,0 {
-                        compatible = "mediatek,mt7615e", "mediatek,mt7615";
+                pci@0,0 {
+                        compatible = "mediatek,mt7915e", "mediatek,mt7615e";
                         reg = <0x0000 0 0 0 0>;
 
                         /* Mainline NVMEM cellular tracking mapping array */
 			                  nvmem-cells = <&wifi_eeprom_5g>, <&mac_wlan_5g>;
 			                  nvmem-cell-names = "eeprom", "mac-address";
                         
-                        /* Relative phandle tracks the 5GHz calibration layout segment */
-                        mediatek,mtd-eeprom = <&romfile 0x4600>;
                 };
         };
 };
