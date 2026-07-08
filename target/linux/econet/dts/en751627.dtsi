@@ -263,7 +263,7 @@
 	  };
 
     ethernet: ethernet@1fb50000 {
-      compatible = "airoha,en7512-eth","syscon";
+      compatible = "airoha,en7581-eth", "airoha,en7512-eth", "syscon";
       reg = <0x1fb50000 0x10000>;
       #address-cells = <1>;
       #size-cells = <1>;
@@ -271,10 +271,6 @@
 			interrupts = <GIC_SHARED 20 IRQ_TYPE_LEVEL_HIGH>,
 			             <GIC_SHARED 21 IRQ_TYPE_LEVEL_HIGH>;
       interrupt-names = "fe", "pdma"; /* Defined here natively at the silicon level */
-      
-      /* FIXED: Connect the hardware to the SoC system controller clock trees */
-      clocks = <&scu 12>, <&scu 13>;
-      clock-names = "sys", "fe";
       
 			resets = <&scu 24>;
       reset-names = "fe";
@@ -290,24 +286,18 @@
           full-duplex;
         };
       };
+    };
 
-      /* FIXED: MDIO bus must live nested directly inside the parent ethernet block */
-      mdio0: mdio-bus {
-        #address-cells = <1>;
-        #size-cells = <0>;
-        compatible = "mediatek,eth-mdio"; /* Standard platform bus driver token */
+    mdio0: mdio-bus {
+      #address-cells = <1>;
+      #size-cells = <0>;
+      compatible = "mediatek,mt7621-mdio";
+      reg = <0x1fb50000 0x10000>;
+      status = "okay";
 
-        /* FIXED: Enforce MDIO controller hardware resets via SCU bit 25 */
-        resets = <&scu 25>;
-        reset-names = "mdio";
-        status = "okay";
-
-        switch0: switch@0 {
-          compatible = "mediatek,mt7530"; /* Canonical DSA switch module token */
-          reg = <0>;
-
-          /* FIXED: Mandatory Multi-Chip Module tracking property flag */
-          mediatek,mcm; 
+      switch0: switch@0 {
+          compatible = "mediatek,mt7530-mmio";
+          reg = <0x1f>;
           status = "okay";
 
           switch_ports: ports {
@@ -334,7 +324,6 @@
               };
             };
           };
-        };
       };
     };
   };

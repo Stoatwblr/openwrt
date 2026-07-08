@@ -278,3 +278,10 @@ CONFIG_MDIO_MEDIATEK=y
 CONFIG_FIXED_PHY=y
 CONFIG_NET_MEDIATEK_SOC=y
 CONFIG_NET_MEDIATEK_STAR_EMAC=y
+# Enforce native byte-swapping register mapping hooks
+CONFIG_SWAP_IO_SPACE=y
+CONFIG_NET_VENDOR_MEDIATEK=y
+# Core Upstream Trendchip/Airoha Frame Engine & Ethernet Subsystem
+CONFIG_FE_CORE=y
+CONFIG_NET_TC3162_ETH=y
+

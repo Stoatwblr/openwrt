@@ -173,15 +173,6 @@
   status = "okay";
 };
 
-&switch_ports {
-  port@0 { status = "okay"; };
-  port@1 { status = "okay"; };
-  port@2 { status = "okay"; };
-  port@3 { status = "okay"; };
-  port@4 { status = "okay"; };
-};
-
-
 /* Attach wireless interfaces directly to their dedicated cells */
 &pcie0 {
     status = "okay";
