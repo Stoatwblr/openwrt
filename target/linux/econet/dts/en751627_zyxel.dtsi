@@ -165,10 +165,6 @@
 	};
 };
 
-&mdio0 {
-  status = "okay";
-};
-
 &switch0 {
   status = "okay";
 };

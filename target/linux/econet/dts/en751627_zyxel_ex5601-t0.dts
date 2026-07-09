@@ -41,7 +41,6 @@
 };
 
 &ethernet {
-	mdio-bus {
 		switch@1f {
 			ports {
 				/* 
@@ -56,5 +55,4 @@
 				};
 			};
 		};
-	};
 };

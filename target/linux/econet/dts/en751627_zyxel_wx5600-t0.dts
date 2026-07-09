@@ -32,7 +32,6 @@
 };
 
 &ethernet {
-	mdio-bus {
 		switch@1f {
 			ports {
 				/* Drop non-wired GbE ports */
@@ -43,5 +42,4 @@
 				port@4 { status = "disabled";	};
 			};
 		};
-	};
 };

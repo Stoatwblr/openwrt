@@ -1,0 +1,34 @@
+Index: linux-6.18.38/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+===================================================================
+--- linux-6.18.38.orig/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ linux-6.18.38/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -5619,7 +5619,17 @@ static const struct mtk_soc_data rt5350_
+ 	},
+ };
+ 
++
++static const struct mtk_soc_data en7512_data = {
++  .caps = MTK_SHARED_CAPS,
++  .hw_features = MTK_SHARED_FEATURES,
++  .required_clks = MTK_CLK_SHARED,
++  .required_pctl = true,
++};
++
+ const struct of_device_id of_mtk_match[] = {
++  { .compatible = "econet,en751221-eth", .data = &en7512_data },
++  { .compatible = "airoha,en7512-eth", .data = &en7512_data },
+ 	{ .compatible = "mediatek,mt2701-eth", .data = &mt2701_data },
+ 	{ .compatible = "mediatek,mt7621-eth", .data = &mt7621_data },
+ 	{ .compatible = "mediatek,mt7622-eth", .data = &mt7622_data },
+Index: linux-6.18.38/drivers/net/dsa/mt7530-mmio.c
+===================================================================
+--- linux-6.18.38.orig/drivers/net/dsa/mt7530-mmio.c
++++ linux-6.18.38/drivers/net/dsa/mt7530-mmio.c
+@@ -11,6 +11,7 @@
+ #include "mt7530.h"
+ 
+ static const struct of_device_id mt7988_of_match[] = {
++	{ .compatible = "mediatek,mt7530-mmio", .data = &mt753x_table[ID_MT7530], },
+ 	{ .compatible = "airoha,an7583-switch", .data = &mt753x_table[ID_AN7583], },
+ 	{ .compatible = "airoha,en7581-switch", .data = &mt753x_table[ID_EN7581], },
+ 	{ .compatible = "mediatek,mt7988-switch", .data = &mt753x_table[ID_MT7988], },

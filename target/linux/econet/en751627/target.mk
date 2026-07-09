@@ -8,14 +8,9 @@ KERNELNAME:=vmlinuz.bin
 FEATURES:=pci page_pool
 
 # Bind mainline Airoha Ethernet framework and the native MT7530 DSA switch driver modules
-DEFAULT_PACKAGES += kmod-airoha-eth -kmod-econet-eth kmod-switch-mt7530 kmod-leds-gpio kmod-gpio-button-hotplug wpad-mbedtls 
+DEFAULT_PACKAGES += kmod-dsa-mt7530 kmod-leds-gpio kmod-gpio-button-hotplug wpad-mbedtls
 
 define Target/Description
 	Build firmware images for EcoNet EN7516 and EN7527 based boards.
-endef
-
-# Force include the module explicitly in the early user-space startup scripts array
-define Image/Config/Default
-	echo "econet_eth" >> $(TARGET_DIR)/etc/modules.boot.d/90-econet-eth
 endef
 

@@ -262,42 +262,30 @@
 		  clock-frequency = <7372800>;
 	  };
 
+    /* Ethernet frame engine claims the lower 32KB configuration register slice */
     ethernet: ethernet@1fb50000 {
-      compatible = "airoha,en7581-eth", "airoha,en7512-eth", "syscon";
+      compatible = "airoha,en7512-eth", "syscon";
       reg = <0x1fb50000 0x10000>;
       #address-cells = <1>;
       #size-cells = <1>;
       interrupt-parent = <&gic>;  
 			interrupts = <GIC_SHARED 20 IRQ_TYPE_LEVEL_HIGH>,
 			             <GIC_SHARED 21 IRQ_TYPE_LEVEL_HIGH>;
-      interrupt-names = "fe", "pdma"; /* Defined here natively at the silicon level */
-      
+      interrupt-names = "fe", "pdma"; 
 			resets = <&scu 24>;
       reset-names = "fe";
 			status = "okay";
 
       gmac0: mac@0 {
         compatible = "mediatek,eth-mac";
-        reg = <0>;
+        reg = <0 0>;
         phy-mode = "trgmii";
-
-        fixed-link {
-          speed = <1000>;
-          full-duplex;
-        };
+        fixed-link { speed = <1000>; full-duplex; };
       };
-    };
 
-    mdio0: mdio-bus {
-      #address-cells = <1>;
-      #size-cells = <0>;
-      compatible = "mediatek,mt7621-mdio";
-      reg = <0x1fb50000 0x10000>;
-      status = "okay";
-
-      switch0: switch@0 {
-          compatible = "mediatek,mt7530-mmio";
-          reg = <0x1f>;
+      switch0: switch@1f {
+          compatible = "mediatek,mt7530"; /* The standard MDIO switch driver match */
+          reg = <0x1fb58000 0x4000>; /* Safe relative offset mapping */
           status = "okay";
 
           switch_ports: ports {
@@ -317,13 +305,9 @@
               label = "cpu";
               ethernet = <&gmac0>; /* FIXED: Point directly to the core GMAC handle */
               phy-mode = "trgmii";
-
-              fixed-link {
-                speed = <1000>;
-                full-duplex;
-              };
+              fixed-link { speed = <1000>; full-duplex; };
             };
-          };
+        };
       };
     };
   };
